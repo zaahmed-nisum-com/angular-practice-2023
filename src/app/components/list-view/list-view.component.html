@@ -1,0 +1,28 @@
+<div class="p-4">
+  <div class="flex flex-row border rounded p-2 font-bold">
+    <p class="w-1/6">ID</p>
+    <p class="w-4/6">TODO</p>
+    <div class="w-1/6 flex flex-row">
+      <p>ACTIONS</p>
+    </div>
+  </div>
+  <div *ngFor="let item of list; let i = index">
+    <div
+      :key="index"
+      class="flex flex-row border rounded p-2 my-2 {{
+        toDoId == item.id && 'bg-green-100 font-bold'
+      }}"
+    >
+      <p class="w-1/6">{{ item.id }}</p>
+      <p class="w-4/6">{{ item.text }}</p>
+      <div class="w-1/6 flex flex-row">
+        <div class="px-2 cursor-pointer">
+          <app-edit (click)="pickForUpdateToDo(item)"></app-edit>
+        </div>
+        <div class="px-2 cursor-pointer">
+          <app-delete (click)="deleteToDos(item.id)"></app-delete>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
