@@ -11,6 +11,8 @@ import { AddComponent } from './icons/add/add.component';
 import { EditComponent } from './icons/edit/edit.component';
 import { DeleteComponent } from './icons/delete/delete.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ProductsComponent } from './pages/products/products.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { FormsModule } from '@angular/forms';
     AddComponent,
     EditComponent,
     DeleteComponent,
+    HttpClientModule,
+    ProductsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
