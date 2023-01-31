@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { ApiService } from 'src/app/api.service';
 import { Products } from 'src/app/model/products';
 
@@ -14,7 +15,11 @@ export class ProductsComponent {
     skip: 0,
     total: 0,
   };
-  constructor(private api: ApiService) {}
+
+  constructor(
+    private api: ApiService,
+    private store: Store<{ checkout: Object }>
+  ) {}
 
   ngOnInit() {
     this.api.getProducts().subscribe((data: any) => {

@@ -10,10 +10,30 @@ import { ProductComponent } from './pages/products/product/product.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { StoreModule } from '@ngrx/store';
+import { checkoutReducer } from './reducers/checkout.reducer';
 
 @NgModule({
-  declarations: [AppComponent, ProductsComponent, ButtonComponent, ProductComponent, HeaderComponent, FooterComponent, CheckoutComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    ProductsComponent,
+    ButtonComponent,
+    ProductComponent,
+    HeaderComponent,
+    FooterComponent,
+    CheckoutComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    StoreModule.forRoot(
+      {
+        checkout: checkoutReducer,
+      },
+      {}
+    ),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
