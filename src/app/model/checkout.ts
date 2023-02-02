@@ -1,6 +1,8 @@
 export interface Checkout {
   products: {
-    items: {};
+    [key: number]: {
+      count: any;
+    };
   };
   totalCount: Number;
   totalPrice: Number;

@@ -1,0 +1,50 @@
+<div
+  id="staticModal"
+  data-modal-backdrop="static"
+  tabindex="-1"
+  aria-hidden="true"
+  [ngClass]="{
+    block: isOpen,
+    hidden: isOpen == false,
+    'bg-gray-radent fixed top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full': true
+  }"
+>
+  <div
+    class="relative w-full h-full max-w-2xl md:h-auto bg-white text-center m-auto p-5 rounded"
+  >
+    <!-- Modal content -->
+    <div>
+      <div (click)="handleClose()" class="text-right w-fit">
+        <svg
+          width="24px"
+          height="24px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M5.46967 5.46967C5.76256 5.17678 6.23744 5.17678 6.53033 5.46967L18.5303 17.4697C18.8232 17.7626 18.8232 18.2374 18.5303 18.5303C18.2374 18.8232 17.7626 18.8232 17.4697 18.5303L5.46967 6.53033C5.17678 6.23744 5.17678 5.76256 5.46967 5.46967Z"
+            fill="#000000"
+          />
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M18.5303 5.46967C18.8232 5.76256 18.8232 6.23744 18.5303 6.53033L6.53035 18.5303C6.23745 18.8232 5.76258 18.8232 5.46969 18.5303C5.17679 18.2374 5.17679 17.7626 5.46968 17.4697L17.4697 5.46967C17.7626 5.17678 18.2374 5.17678 18.5303 5.46967Z"
+            fill="#000000"
+          />
+        </svg>
+      </div>
+    </div>
+    <p class="text-2xl font-bold">Your order is complete!</p>
+    <p class="text-md font-bold text-gray-200">
+      Your will get the confirmation email with order details
+    </p>
+    <button
+      class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
+    >
+      Shop More
+    </button>
+  </div>
+</div>

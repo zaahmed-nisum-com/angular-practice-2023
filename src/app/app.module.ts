@@ -12,6 +12,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { StoreModule } from '@ngrx/store';
 import { checkoutReducer } from './reducers/checkout.reducer';
+import { ThankyouOrderConfirmComponent } from './components/thankyou-order-confirm/thankyou-order-confirm.component';
 
 @NgModule({
   declarations: [
@@ -22,17 +23,15 @@ import { checkoutReducer } from './reducers/checkout.reducer';
     HeaderComponent,
     FooterComponent,
     CheckoutComponent,
+    ThankyouOrderConfirmComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(
-      {
-        checkout: checkoutReducer,
-      },
-      {}
-    ),
+    StoreModule.forRoot({
+      checkout: checkoutReducer,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

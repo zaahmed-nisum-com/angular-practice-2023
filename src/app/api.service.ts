@@ -10,7 +10,7 @@ export class ApiService {
   getProducts = () => {
     return this.http.get('https://dummyjson.com/products');
   };
-  getProductById = () => {
-    return this.http.get('https://dummyjson.com/products/1');
+  getProductById = (id: Number) => {
+    return this.http.get(`https://dummyjson.com/products/${id}`);
   };
 }

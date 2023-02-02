@@ -7,9 +7,7 @@ import { createReducer, on } from '@ngrx/store';
 import { Action } from 'rxjs/internal/scheduler/Action';
 
 const initialState: Checkout = {
-  products: {
-    items: [],
-  },
+  products: {},
   totalCount: 0,
   totalPrice: 0,
   isDiscountApplied: false,
@@ -18,14 +16,70 @@ const initialState: Checkout = {
   totaPriceAfterDeliveryFee: 0,
 };
 
-export const checkoutReducer = createReducer(
+export const _checkoutReducer = createReducer(
   initialState,
-  on(addItemToCheckout, (state) => {
-    console.log(state);
-    return state;
+  on(addItemToCheckout, (state: any, payload: any) => {
+    try {
+      let checkout = { ...state };
+      const id = payload.id.toString();
+      if (checkout.products.hasOwnProperty(payload.id)) {
+        let product = { ...checkout.products[payload.id] };
+        product.count = product.count + 1;
+        checkout = {
+          ...checkout,
+          products: {
+            ...checkout.products,
+            [`${id}`]: { ...product },
+          },
+        };
+      } else {
+        checkout = {
+          ...checkout,
+          products: {
+            ...checkout.products,
+            [`${id}`]: { ...payload, count: 1 },
+          },
+        };
+      }
+      return { ...state, ...checkout };
+    } catch (error) {
+      console.log(error);
+    }
   }),
-  on(removeItemToCheckout, (state) => {
-    console.log(state);
+  on(removeItemToCheckout, (state: any, payload: any) => {
+    try {
+      let checkout = { ...state };
+      const id = payload.id.toString();
+      if (checkout.products.hasOwnProperty(payload.id)) {
+        if (checkout.products[payload.id].count == 1) {
+          checkout = {
+            ...checkout,
+            products: {
+              ...checkout.products,
+              [`${id}`]: {},
+            },
+          };
+          delete checkout.products[`${id}`];
+        } else {
+          let product = { ...checkout.products[payload.id] };
+          product.count = product.count - 1;
+          checkout = {
+            ...checkout,
+            products: {
+              ...checkout.products,
+              [payload.id]: { ...product },
+            },
+          };
+        }
+      }
+      return { ...state, ...checkout };
+    } catch (error) {
+      console.log(error);
+    }
     return state;
   })
 );
+
+export function checkoutReducer(state: any, action: any) {
+  return _checkoutReducer(state, action);
+}

@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { map, Observable } from 'rxjs';
 import { ApiService } from 'src/app/api.service';
 import {
   addItemToCheckout,
   removeItemToCheckout,
 } from 'src/app/model/actions/checkout.action';
 import { ActivatedRoute } from '@angular/router';
+import { Checkout } from 'src/app/model/checkout';
+import { Products } from 'src/app/model/products';
 
 @Component({
   selector: 'app-product',
@@ -14,26 +16,41 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent {
-  checkout$: Observable<Object>;
+  checkout$: any = {};
+
+  product: {
+    id: 0;
+    brand: '';
+    description: '';
+    price: '';
+    rating: '';
+    category: '';
+    images: [];
+    thumbnail: '';
+  };
 
   constructor(
     private api: ApiService,
-    private store: Store<{ checkout: Object }>,
+    private store: Store<{ checkout: Checkout }>,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    store.select('checkout').subscribe((v) => {
+      this.checkout$ = v;
+    });
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      console.log(params); // { orderby: "price" }
+      this.api.getProductById(params['id']).subscribe((data: any) => {
+        this.product = { ...data };
+      });
     });
   }
 
   addItem(item: any) {
-    console.log(item);
-    this.store.dispatch(addItemToCheckout());
+    this.store.dispatch(addItemToCheckout(item));
   }
   removeItem(item: any) {
-    console.log(item);
-    this.store.dispatch(removeItemToCheckout());
+    this.store.dispatch(removeItemToCheckout(item));
   }
 }
