@@ -13,7 +13,7 @@
             alt=""
           />
           <div
-            class="border-4 border-yellow-200 absolute top-10 bottom-10 left-10 right-10 z-0"
+            class="border-4 border-yellow-200 absolute -top-10 bottom-10 -left-10 right-10 z-0"
           ></div>
         </div>
       </div>
@@ -37,8 +37,6 @@
             product.rating
           }}</span>
         </div>
-        {{ checkout$ }}
-
         <div class="bg-white flex w-fit my-2 py-1 rounded">
           <div class="px-2 cursor-pointer" (click)="addItem(product)">
             <svg

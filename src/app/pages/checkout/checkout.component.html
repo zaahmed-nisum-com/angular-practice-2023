@@ -1,73 +1,104 @@
+<a href="#" class="text-2xl font-bold text-gray-800 px-4 py-4">sneekpeeks</a>
 <div
   class="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32"
 >
-  <a href="#" class="text-2xl font-bold text-gray-800">sneekpeeks</a>
-  <div class="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base">
-    <div class="relative"></div>
-  </div>
-</div>
-<div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
-  <div class="px-4 pt-8">
+  <div class="px-4 pt-8 w-1/2" *ngIf="productList.length > 0">
     <p class="text-xl font-medium">Order Summary</p>
     <p class="text-gray-400">
       Check your items. And select a suitable shipping method.
     </p>
-    <div
-      *ngIf="productKeys.length > 0"
-      class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6"
-    >
+    <div class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
       <div
         class="flex flex-col rounded-lg bg-white sm:flex-row"
-        *ngFor="let item of productKeys"
+        *ngFor="let item of productList"
       >
         <img
           class="m-2 h-24 w-28 rounded-md border object-cover object-center"
-          src="{{ products[item].thumbnail }}"
+          src="{{ item.thumbnail }}"
           alt=""
         />
-        <div class="flex flex-col w-full">
-          <div class="h-fit px-4 flex items-center justify-between">
-            <span class="px-2">Quantity: </span>
-            <p class="text-lg font-bold">{{ products[item].count }}</p>
+        <div class="m-2 w-full">
+          <div class="justify-between flex text-lg">
+            <span class="font-bold">Quantity: </span
+            ><span>{{ item.count }}</span>
           </div>
-          <div class="w-full px-4 flex items-center justify-between">
-            <span class="px-2">Price: </span>
-            <!-- <span class="font-semibold">{{ checkout.products[item.key] }}</span> -->
-            <p class="text-lg font-bold">${{ products[item].price }}</p>
+          <div class="justify-between flex text-lg">
+            <span class="font-bold">Price: </span>
+            <div class="flex">
+              <span class="font-bold">$</span><span>{{ item.totalPrice }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <p class="mt-8 text-lg font-medium">Shipping Methods</p>
-    <div class="relative">
-      <input
-        class="peer hidden"
-        id="radio_1"
-        type="radio"
-        name="radio"
-        checked
-      />
-      <span
-        class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"
-      ></span>
-      <label
-        class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-        for="radio_1"
-      >
-        <img
-          class="w-14 object-contain"
-          src="/images/naorrAeygcJzX0SyNI4Y0.png"
-          alt=""
-        />
-        <div class="ml-5">
-          <span class="mt-2 font-semibold">Fedex Delivery</span>
-          <p class="text-slate-500 text-sm leading-6">Delivery: 2-4 Days</p>
+    <div>
+      <p class="mt-8 text-lg font-medium">Shipping Methods</p>
+      <div class="">
+        <div *ngIf="cardCaptureReady">
+          <stripe-card
+            #stripeCard
+            (catch)="onStripeError($event)"
+            [(complete)]="cardDetailsFilledOut"
+            [(invalid)]="invalidError"
+            (cardMounted)="cardMounted()"
+            (paymentMethodChange)="setPaymentMethod($event)"
+            (tokenChange)="setStripeToken($event)"
+            (sourceChange)="setStripeSource($event)"
+          ></stripe-card>
         </div>
-      </label>
+      </div>
+    </div>
+    <div class="my-3">
+      <p class="text-xl font-bold">Address</p>
+      <input
+        placeholder="Full Name"
+        [(ngModel)]="address.fullName"
+        (keyup)="onTextChangeHandle($event)"
+        class="my-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="fullName"
+        type="text"
+      />
+      <input
+        placeholder="Addess "
+        [(ngModel)]="address.addess"
+        class="my-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="addess"
+        type="text"
+      />
+      <input
+        placeholder="Country"
+        [(ngModel)]="address.country"
+        class="my-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="country"
+        type="text"
+      />
+      <input
+        placeholder="City"
+        [(ngModel)]="address.city"
+        class="my-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="city"
+        type="text"
+      />
+      <input
+        placeholder="State"
+        [(ngModel)]="address.state"
+        class="my-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="state"
+        type="text"
+      />
+      <input
+        placeholder="Zip Code"
+        [(ngModel)]="address.zipCode"
+        class="my-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="zipCode"
+        type="text"
+      />
     </div>
   </div>
-  <div class="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
+  <div
+    *ngIf="productList.length > 0"
+    class="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0 w-1/2"
+  >
     <p class="text-xl font-medium">Payment Details</p>
     <p class="text-gray-400">
       Complete your order by providing your payment details.
@@ -78,16 +109,18 @@
       <div class="mt-6 border-t border-b py-2">
         <div class="flex items-center justify-between">
           <p class="text-sm font-medium text-gray-900">Subtotal</p>
-          <p class="font-semibold text-gray-900">$399.00</p>
+          <p class="font-semibold text-gray-900">${{ checkout.totalPrice }}</p>
         </div>
         <div class="flex items-center justify-between">
           <p class="text-sm font-medium text-gray-900">Shipping</p>
-          <p class="font-semibold text-gray-900">$8.00</p>
+          <p class="font-semibold text-gray-900">${{ checkout.deliveryFee }}</p>
         </div>
       </div>
       <div class="mt-6 flex items-center justify-between">
         <p class="text-sm font-medium text-gray-900">Total</p>
-        <p class="text-2xl font-semibold text-gray-900">$408.00</p>
+        <p class="text-2xl font-semibold text-gray-900">
+          ${{ checkout.totalPrice + checkout.deliveryFee }}
+        </p>
       </div>
     </div>
     <button
@@ -97,6 +130,19 @@
       Place Order
     </button>
   </div>
+</div>
+<div
+  *ngIf="productList.length == 0"
+  class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32 py-4"
+>
+  <p class="text-2xl font-bold text-gray-800 p-5 text-center m-auto">
+    Your cart is empty!
+  </p>
+  <button
+    class="w-full my-2 rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
+  >
+    Shop Now
+  </button>
 </div>
 
 <app-thankyou-order-confirm

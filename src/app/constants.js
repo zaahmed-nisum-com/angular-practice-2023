@@ -1,0 +1,6 @@
+export const FULL_NAME_REGEX = ''
+export const STATE_REGEX = ''
+export const CITY_REGEX = ''
+export const EMAIL_REGEX = ''
+export const COUNTRY_REGEX = ''
+export const ZIP_CODE_REGEX = ''

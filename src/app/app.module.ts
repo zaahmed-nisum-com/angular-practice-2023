@@ -13,6 +13,8 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { StoreModule } from '@ngrx/store';
 import { checkoutReducer } from './reducers/checkout.reducer';
 import { ThankyouOrderConfirmComponent } from './components/thankyou-order-confirm/thankyou-order-confirm.component';
+import { StripeModule } from 'stripe-angular';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,12 +28,16 @@ import { ThankyouOrderConfirmComponent } from './components/thankyou-order-confi
     ThankyouOrderConfirmComponent,
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot({
       checkout: checkoutReducer,
     }),
+    StripeModule.forRoot(
+      'pk_test_51MVyW8CkPo3tTGeTNJBnMMP7KBq7hy8QCOReyv1H9xEJLSI8sBZ5KGl9pp1Wsiiikvj8REJkf1KIys6uAQAK5axX00XLEX54dD'
+    ),
   ],
   providers: [],
   bootstrap: [AppComponent],

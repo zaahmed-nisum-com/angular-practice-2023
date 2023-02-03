@@ -10,4 +10,5 @@ export interface Checkout {
   afterDiscountTotal: Number;
   isDeliveryFee: Boolean;
   totaPriceAfterDeliveryFee: Number;
+  deliveryFee: Number;
 }
