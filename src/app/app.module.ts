@@ -15,6 +15,7 @@ import { checkoutReducer } from './reducers/checkout.reducer';
 import { ThankyouOrderConfirmComponent } from './components/thankyou-order-confirm/thankyou-order-confirm.component';
 import { StripeModule } from 'stripe-angular';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     StoreModule.forRoot({
       checkout: checkoutReducer,
     }),

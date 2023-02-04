@@ -1,10 +1,13 @@
 import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { loadStripe } from '@stripe/stripe-js';
 import { Observable } from 'rxjs';
 import { addItemToCheckout } from 'src/app/model/actions/checkout.action';
 import { StripeScriptTag } from 'stripe-angular';
+import { FormControl } from '@angular/forms';
+import { isValidName } from '../../utils/validations/nameValidation';
 
 @Component({
   selector: 'app-checkout',
@@ -82,6 +85,13 @@ export class CheckoutComponent {
   }
 
   handleOrderConfirm = () => {
-    this.orderComplete = !this.orderComplete;
+    this.validation(this.address);
+    // this.orderComplete = !this.orderComplete;
+  };
+
+  validation = (data: any) => {
+    if (isValidName(data.fullName)) {
+      console.log(isValidName(data.fullName));
+    }
   };
 }
