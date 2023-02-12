@@ -19,6 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CookieService } from 'ngx-cookie-service';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { WishlistComponent } from './pages/components/wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { CookieService } from 'ngx-cookie-service';
     ThankyouOrderConfirmComponent,
     LoaderComponent,
     LoginComponent,
+    UserProfileComponent,
+    WishlistComponent,
   ],
   imports: [
     FormsModule,
