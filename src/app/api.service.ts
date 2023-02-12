@@ -13,4 +13,7 @@ export class ApiService {
   getProductById = (id: Number) => {
     return this.http.get(`https://dummyjson.com/products/${id}`);
   };
+  loginUser = (data: { email: String; password: String }) => {
+    return this.http.get(`https://jsonplaceholder.typicode.com/todos/1`);
+  };
 }

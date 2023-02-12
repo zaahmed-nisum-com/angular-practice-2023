@@ -16,6 +16,9 @@ import { ThankyouOrderConfirmComponent } from './components/thankyou-order-confi
 import { StripeModule } from 'stripe-angular';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoaderComponent } from './components/loader/loader.component';
+import { LoginComponent } from './pages/login/login.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     CheckoutComponent,
     ThankyouOrderConfirmComponent,
+    LoaderComponent,
+    LoginComponent,
   ],
   imports: [
     FormsModule,
@@ -41,7 +46,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       'pk_test_51MVyW8CkPo3tTGeTNJBnMMP7KBq7hy8QCOReyv1H9xEJLSI8sBZ5KGl9pp1Wsiiikvj8REJkf1KIys6uAQAK5axX00XLEX54dD'
     ),
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

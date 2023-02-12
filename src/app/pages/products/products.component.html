@@ -1,4 +1,5 @@
-<div class="flex flex-row flex-wrap m-auto justify-center">
+<app-loader *ngIf="isLoading"></app-loader>
+<div *ngIf="!isLoading" class="flex flex-row flex-wrap m-auto justify-center">
   <div *ngFor="let item of products.products; let i = index">
     <div
       class="m-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"

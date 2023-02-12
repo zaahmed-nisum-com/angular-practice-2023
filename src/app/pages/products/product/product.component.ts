@@ -28,6 +28,7 @@ export class ProductComponent {
     images: [];
     thumbnail: '';
   };
+  isLoading = true;
 
   constructor(
     private api: ApiService,
@@ -43,6 +44,7 @@ export class ProductComponent {
     this.route.queryParams.subscribe((params) => {
       this.api.getProductById(params['id']).subscribe((data: any) => {
         this.product = { ...data };
+        this.isLoading = false;
       });
     });
   }
