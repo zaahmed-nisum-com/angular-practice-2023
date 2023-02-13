@@ -8,10 +8,12 @@ export class CookiesStorageModel {
   constructor(private cookieService: CookieService) {}
 
   getCookies = (key: string) => {
-    return JSON.parse(this.cookieService.get(key) || '{}');
+    return JSON.parse(this.cookieService.get(key) || 'null');
   };
   createCoockies = (key: string, value: object) => {
     this.cookieService.set(key, JSON.stringify(value));
   };
-  deleteCoockies = () => {};
+  deleteCoockies = (key: any) => {
+    this.cookieService.delete(key);
+  };
 }

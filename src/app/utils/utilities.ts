@@ -14,17 +14,20 @@ export class Utilities {
   ) {}
 
   isAuthenticate = (key: string) => {
-    const session: {
-      tokenExpire: string;
-    } = this.session.getSession(key);
+    const session = this.session.getSession(key);
     const coockies = this.cookies.getCookies(key);
     if (session !== null && coockies !== null) {
-      if (new Date() > new Date(session.tokenExpire)) {
+      if (
+        coockies?.tokenExpire &&
+        new Date() > new Date(coockies.tokenExpire)
+      ) {
+        this.cookies.deleteCoockies(key);
         this.router.navigateByUrl('/login');
       } else {
         this.router.navigateByUrl('/products');
       }
     } else {
+      this.cookies.deleteCoockies(key);
       this.router.navigateByUrl('/login');
     }
   };

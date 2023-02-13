@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Checkout } from 'src/app/model/checkout';
+import { CookiesStorageModel } from 'src/app/utils/coockies/coockies';
+import { SessionStorageService } from 'src/app/utils/session/sessions';
+import { Utilities } from 'src/app/utils/utilities';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +12,25 @@ import { Checkout } from 'src/app/model/checkout';
 })
 export class HeaderComponent {
   totalProductsInCart = 0;
+  isAuthentiacate = true;
 
-  constructor(private store: Store<{ checkout: Checkout }>) {
+  constructor(
+    private utilties: Utilities,
+    private session: SessionStorageService,
+    private coockies: CookiesStorageModel,
+    private store: Store<{ checkout: Checkout }>
+  ) {
     store.select('checkout').subscribe((v) => {
       this.totalProductsInCart = Object.keys(v.products).length;
     });
+  }
+
+  ngOnInit() {
+    if (
+      this.coockies.getCookies(`${window.location.origin}-e-com`) == null &&
+      this.session.getSession(`${window.location.origin}-e-com`) == null
+    ) {
+      this.isAuthentiacate = false;
+    }
   }
 }
