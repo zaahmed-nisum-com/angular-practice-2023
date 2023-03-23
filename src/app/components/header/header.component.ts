@@ -26,6 +26,8 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
+    console.log(this.coockies.getCookies(`${window.location.origin}-e-com`) )
+    console.log(this.session.getSession(`${window.location.origin}-e-com`) )
     if (
       this.coockies.getCookies(`${window.location.origin}-e-com`) == null &&
       this.session.getSession(`${window.location.origin}-e-com`) == null

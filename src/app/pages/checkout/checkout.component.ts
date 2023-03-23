@@ -4,10 +4,12 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { loadStripe } from '@stripe/stripe-js';
 import { Observable } from 'rxjs';
-import { addItemToCheckout } from 'src/app/model/actions/checkout.action';
+import { addItemToOrderHistory } from 'src/app/model/actions/orderHistory.action';
 import { StripeScriptTag } from 'stripe-angular';
 import { FormControl } from '@angular/forms';
 import { isValidName } from '../../utils/validations/nameValidation';
+import { Checkout } from 'src/app/model/checkout';
+import { OrderHistory } from 'src/app/model/orderHistory';
 
 @Component({
   selector: 'app-checkout',
@@ -21,6 +23,10 @@ export class CheckoutComponent {
   cardCaptureReady = false;
   invalidError: any = '';
   cardDetailsFilledOut: any = '';
+  orderDetails: any = {
+    order:{},
+    address:{}
+  }
 
   address: any = {
     fullName: '',
@@ -32,9 +38,12 @@ export class CheckoutComponent {
   };
 
   constructor(
-    private store: Store<{ checkout: Object }>,
+    private store: Store<{ checkout: Checkout, orderHistory:OrderHistory }>,
     private stripeScriptTag: StripeScriptTag
   ) {
+    store.select('orderHistory').subscribe((v: any) => {
+      console.log(v);
+    });
     store.select('checkout').subscribe((v: any) => {
       this.checkout = v;
       console.log(v.products);
@@ -86,7 +95,13 @@ export class CheckoutComponent {
 
   handleOrderConfirm = () => {
     this.validation(this.address);
-    // this.orderComplete = !this.orderComplete;
+    this.productList.map(item=>{
+      this.orderDetails.order[item.id] = {...item}
+    })
+    this.orderDetails.address ={...this.address}
+    this.orderDetails.checkout = {...this.checkout}
+    console.log("orderHistory",this.orderDetails)
+    this.store.dispatch(addItemToOrderHistory(this.orderDetails))
   };
 
   validation = (data: any) => {

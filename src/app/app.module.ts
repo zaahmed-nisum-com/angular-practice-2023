@@ -21,6 +21,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { CookieService } from 'ngx-cookie-service';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { WishlistComponent } from './pages/components/wishlist/wishlist.component';
+import { orderHistoryReducer } from './reducers/orderHistory.reducer';
+import { OrderHistoryComponent } from './pages/order-history/order-history.component';
+import { OrderHistoryCardComponent } from './components/cards/order-history-card/order-history-card.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,8 @@ import { WishlistComponent } from './pages/components/wishlist/wishlist.componen
     LoginComponent,
     UserProfileComponent,
     WishlistComponent,
+    OrderHistoryComponent,
+    OrderHistoryCardComponent,
   ],
   imports: [
     FormsModule,
@@ -45,6 +50,7 @@ import { WishlistComponent } from './pages/components/wishlist/wishlist.componen
     ReactiveFormsModule,
     StoreModule.forRoot({
       checkout: checkoutReducer,
+      orderHistory: orderHistoryReducer
     }),
     StripeModule.forRoot(
       'pk_test_51MVyW8CkPo3tTGeTNJBnMMP7KBq7hy8QCOReyv1H9xEJLSI8sBZ5KGl9pp1Wsiiikvj8REJkf1KIys6uAQAK5axX00XLEX54dD'
